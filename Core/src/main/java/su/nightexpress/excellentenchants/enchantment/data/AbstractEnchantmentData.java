@@ -394,7 +394,7 @@ public abstract class AbstractEnchantmentData extends AbstractFileData<EnchantsP
         }
 
         String compName = Config.ENCHANTMENTS_DISPLAY_NAME_COMPONENT_NAME.get().replace(GENERIC_VALUE, this.getName());
-        String compLevel = showLevel ? Config.ENCHANTMENTS_DISPLAY_NAME_COMPONENT_LEVEL.get().replace(GENERIC_VALUE, NumberUtil.toRoman(level)) : "";
+        String compLevel = showLevel ? Config.ENCHANTMENTS_DISPLAY_NAME_COMPONENT_LEVEL.get().replace(GENERIC_VALUE, getFormattedLevel(level, getMaxLevel())) : "";
         String compChrages = showCharges ? Config.ENCHANTMENTS_DISPLAY_NAME_COMPONENT_CHARGES.get().replace(GENERIC_VALUE, chargesFormat) : "";
 
         String nameFormat = Config.ENCHANTMENTS_DISPLAY_NAME_FORMAT.get().
@@ -403,6 +403,14 @@ public abstract class AbstractEnchantmentData extends AbstractFileData<EnchantsP
             .replace(ENCHANTMENT_CHARGES, compChrages);
 
         return rarityFormat.replace(GENERIC_NAME, nameFormat);
+    }
+
+    public String getFormattedLevel(int level, int maxLevel) {
+        if (maxLevel == 1) {
+            return "";
+        } else {
+            return NumberUtil.toRoman(level);
+        }
     }
 
     @Override

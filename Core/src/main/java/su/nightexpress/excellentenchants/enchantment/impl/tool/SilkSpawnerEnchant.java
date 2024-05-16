@@ -60,7 +60,7 @@ public class SilkSpawnerEnchant extends AbstractEnchantmentData implements Chanc
         this.setDescription(ENCHANTMENT_CHANCE + "% chance to mine spawner.");
         this.setMaxLevel(5);
         this.setRarity(Rarity.VERY_RARE);
-        this.setConflicts(SmelterEnchant.ID);
+        this.setConflicts(InfernalTouchEnchant.ID);
     }
 
     @Override

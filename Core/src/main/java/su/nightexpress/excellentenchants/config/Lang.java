@@ -71,4 +71,21 @@ public class Lang extends CoreLang {
     public static final LangText ERROR_INVALID_RARITY = LangText.of("Error.InvalidRarity",
         RED.enclose("Invalid rarity!"));
 
+    public static final LangString COMMAND_ENCHANT_REMOVER_USAGE = LangString.of("Command.Enchant_Remover.Usage",
+            "<player> <quantity>");
+
+    public static final LangString COMMAND_ENCHANT_REMOVER_DESC = LangString.of("Command.Enchant_Remover.Desc",
+            "Gives an enchantment remover (item).");
+
+    public static final LangText COMMAND_ENCHANT_REMOVER_DONE = LangText.of("Command.Enchant_Remover.Done",
+            LIGHT_GRAY.enclose("Given " + LIGHT_YELLOW.enclose(GENERIC_AMOUNT) + "x enchantment remover to " + LIGHT_YELLOW.enclose(PLAYER_DISPLAY_NAME) + "."));
+
+    public static final LangText ENCHANT_REMOVER_INITIATE = LangText.of("Enchant_Remover.Initiate",
+            LIGHT_GRAY.enclose("Initiated enchantment remover. Valid enchantments to remove are: " + LIGHT_YELLOW.enclose(ENCHANTMENTS_ON_ITEM) + ". Type 'cancel' to cancel."));
+    public static final LangText ENCHANT_REMOVER_CANCELLED = LangText.of("Enchant_Remover.Cancelled",
+            LIGHT_GRAY.enclose("Cancelled enchantment removal. Returning enchantment remover item to you."));
+    public static final LangText ENCHANT_REMOVER_NOT_ENCHANT = LangText.of("Enchant_Remover.Not_Enchantment",
+            LIGHT_GRAY.enclose("That is not a valid enchantment on this item!"));
+    public static final LangText ENCHANT_REMOVER_SUCCESS = LangText.of("Enchant_Remover.Success",
+            LIGHT_GRAY.enclose("Successfully removed enchantment, and returned it to you in book form!"));
 }

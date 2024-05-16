@@ -23,9 +23,9 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-public class TunnelEnchant extends AbstractEnchantmentData implements BlockBreakEnchant {
+public class GigaminerEnchant extends AbstractEnchantmentData implements BlockBreakEnchant {
 
-    public static final String   ID                   = "tunnel";
+    public static final String   ID                   = "gigaminer";
     // X and Z offsets for each block AoE mined
     private static final int[][] MINING_COORD_OFFSETS = new int[][]{{0, 0}, {0, -1}, {-1, 0}, {0, 1}, {1, 0}, {-1, -1}, {-1, 1}, {1, -1}, {1, 1},};
     private static final Set<Material> INTERACTABLE_BLOCKS = new HashSet<>();
@@ -37,11 +37,11 @@ public class TunnelEnchant extends AbstractEnchantmentData implements BlockBreak
 
     private boolean disableOnSneak;
 
-    public TunnelEnchant(@NotNull EnchantsPlugin plugin, @NotNull File file) {
+    public GigaminerEnchant(@NotNull EnchantsPlugin plugin, @NotNull File file) {
         super(plugin, file);
 
-        this.setDescription("Mines multiple blocks at once in a certain shape.");
-        this.setMaxLevel(3);
+        this.setDescription("Mines blocks in a 3x3 shape.");
+        this.setMaxLevel(1);
         this.setRarity(Rarity.VERY_RARE);
         this.setConflicts(VeinminerEnchant.ID, BlastMiningEnchant.ID);
     }
@@ -86,10 +86,7 @@ public class TunnelEnchant extends AbstractEnchantmentData implements BlockBreak
         boolean isZ = dir == BlockFace.EAST || dir == BlockFace.WEST;
 
         // Mine + shape if Tunnel I, 3x3 if Tunnel II
-        int blocksBroken = 1;
-        if (level == 1) blocksBroken = 2;
-        else if (level == 2) blocksBroken = 5;
-        else if (level >= 3) blocksBroken = 9;
+        int blocksBroken = 9;
 
         for (int i = 0; i < blocksBroken; i++) {
             if (item.getType().isAir()) break;

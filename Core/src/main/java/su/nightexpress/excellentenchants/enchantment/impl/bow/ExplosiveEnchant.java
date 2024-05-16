@@ -33,9 +33,9 @@ import java.io.File;
 
 import static su.nightexpress.excellentenchants.Placeholders.*;
 
-public class ExplosiveArrowsEnchant extends AbstractEnchantmentData implements ChanceData, ArrowData, BowEnchant, SimpeListener {
+public class ExplosiveEnchant extends AbstractEnchantmentData implements ChanceData, ArrowData, BowEnchant, SimpeListener {
 
-    public static final String ID = "explosive_arrows";
+    public static final String ID = "explosive";
 
     private boolean  explosionFireSpread;
     private boolean  explosionDamageItems;
@@ -47,7 +47,7 @@ public class ExplosiveArrowsEnchant extends AbstractEnchantmentData implements C
 
     private Entity lastExploder;
 
-    public ExplosiveArrowsEnchant(@NotNull EnchantsPlugin plugin, @NotNull File file) {
+    public ExplosiveEnchant(@NotNull EnchantsPlugin plugin, @NotNull File file) {
         super(plugin, file);
         this.setDescription(ENCHANTMENT_CHANCE + "% chance to launch an explosive arrow.");
         this.setMaxLevel(3);

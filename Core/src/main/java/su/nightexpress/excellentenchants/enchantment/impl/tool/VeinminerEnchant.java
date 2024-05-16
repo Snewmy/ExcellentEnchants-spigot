@@ -46,9 +46,9 @@ public class VeinminerEnchant extends AbstractEnchantmentData implements BlockBr
         super(plugin, file);
 
         this.setDescription("Mines up to " + GENERIC_AMOUNT + " blocks of the ore vein at once.");
-        this.setMaxLevel(3);
+        this.setMaxLevel(4);
         this.setRarity(Rarity.RARE);
-        this.setConflicts(BlastMiningEnchant.ID, TunnelEnchant.ID);
+        this.setConflicts(BlastMiningEnchant.ID, GigaminerEnchant.ID);
     }
 
     @Override
@@ -59,7 +59,7 @@ public class VeinminerEnchant extends AbstractEnchantmentData implements BlockBr
         ).read(config);
 
         this.blocksLimit = Modifier.read(config, "Settings.Blocks.Limit",
-            Modifier.add(4, 1, 1, 16),
+            Modifier.add(4, 3, 1, 16),
             "Max. possible amount of blocks to be mined at the same time.");
 
         this.affectedBlocks = ConfigValue.forSet("Settings.Blocks.List",

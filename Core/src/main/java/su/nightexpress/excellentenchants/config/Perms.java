@@ -19,6 +19,7 @@ public class Perms {
     public static final UniPermission COMMAND_LIST_OTHERS        = new UniPermission(PREFIX_COMMAND + "list.others");
     public static final UniPermission COMMAND_RARITY_BOOK = new UniPermission(PREFIX_COMMAND + "raritybook");
     public static final UniPermission COMMAND_RELOAD      = new UniPermission(PREFIX_COMMAND + "reload");
+    public static final UniPermission COMMAND_ENCHANT_REMOVER        = new UniPermission(PREFIX_COMMAND + "enchantremover");
 
     static {
         PLUGIN.addChildren(COMMAND);

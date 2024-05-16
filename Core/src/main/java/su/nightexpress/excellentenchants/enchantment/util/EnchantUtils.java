@@ -371,4 +371,20 @@ public class EnchantUtils {
         String name = PDCUtil.getString(entity, Keys.entitySpawnReason).orElse(null);
         return name == null ? null : StringUtil.getEnum(name, CreatureSpawnEvent.SpawnReason.class).orElse(null);
     }
+
+    public static String getFormattedListOfEnchants(Map<EnchantmentData, Integer> enchants) {
+        List<String> list = new ArrayList<>();
+        enchants.forEach((enchantment, level) -> {
+            list.add(enchantment.getId().toLowerCase());
+        });
+        return String.join(", ", list);
+    }
+
+    public static List<String> getListEnchantIds(Map<EnchantmentData, Integer> enchants) {
+        List<String> list = new ArrayList<>();
+        enchants.forEach((enchantment, level) -> {
+            list.add(enchantment.getId().toLowerCase());
+        });
+        return list;
+    }
 }

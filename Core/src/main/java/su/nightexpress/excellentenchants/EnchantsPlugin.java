@@ -4,6 +4,7 @@ import org.bukkit.enchantments.EnchantmentTarget;
 import org.bukkit.entity.Item;
 import org.bukkit.event.block.BlockDropItemEvent;
 import org.bukkit.inventory.ItemStack;
+import org.checkerframework.checker.units.qual.C;
 import org.jetbrains.annotations.NotNull;
 import su.nightexpress.excellentenchants.api.enchantment.ItemCategory;
 import su.nightexpress.excellentenchants.api.DistributionWay;
@@ -15,6 +16,8 @@ import su.nightexpress.excellentenchants.config.Lang;
 import su.nightexpress.excellentenchants.config.Perms;
 import su.nightexpress.excellentenchants.enchantment.EnchantManager;
 import su.nightexpress.excellentenchants.enchantment.EnchantPopulator;
+import su.nightexpress.excellentenchants.enchantment.listener.ConversionListener;
+import su.nightexpress.excellentenchants.enchantment.listener.EnchantRemoverListener;
 import su.nightexpress.excellentenchants.enchantment.registry.EnchantRegistry;
 import su.nightexpress.excellentenchants.hook.HookPlugin;
 import su.nightexpress.excellentenchants.hook.impl.PlaceholderHook;
@@ -88,6 +91,8 @@ public class EnchantsPlugin extends NightPlugin {
         if (Plugins.hasPlaceholderAPI()) {
             PlaceholderHook.setup(this);
         }
+        getServer().getPluginManager().registerEvents(new ConversionListener(this), this);
+        getServer().getPluginManager().registerEvents(new EnchantRemoverListener(this), this);
     }
 
     @Override
@@ -122,6 +127,7 @@ public class EnchantsPlugin extends NightPlugin {
         mainCommand.addChildren(new ListCommand(this));
         mainCommand.addChildren(new RarityBookCommand(this));
         mainCommand.addChildren(new ReloadSubCommand(this, Perms.COMMAND_RELOAD));
+        mainCommand.addChildren(new EnchantRemoverCommand(this));
         if (Config.ENCHANTMENTS_CHARGES_ENABLED.get()) {
             mainCommand.addChildren(new GetFuelCommand(this));
         }

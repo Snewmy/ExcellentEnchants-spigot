@@ -48,7 +48,7 @@ public class BlastMiningEnchant extends AbstractEnchantmentData implements Chanc
         this.setDescription(ENCHANTMENT_CHANCE + "% chance to mine blocks by explosion.");
         this.setMaxLevel(5);
         this.setRarity(Rarity.RARE);
-        this.setConflicts(VeinminerEnchant.ID, TunnelEnchant.ID);
+        this.setConflicts(VeinminerEnchant.ID, GigaminerEnchant.ID);
     }
 
     @Override

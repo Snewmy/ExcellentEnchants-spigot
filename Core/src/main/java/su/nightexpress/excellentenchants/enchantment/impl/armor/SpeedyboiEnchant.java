@@ -20,23 +20,23 @@ import java.io.File;
 
 import static su.nightexpress.excellentenchants.Placeholders.*;
 
-public class NightVisionEnchant extends AbstractEnchantmentData implements PotionData, PassiveEnchant {
+public class SpeedyboiEnchant extends AbstractEnchantmentData implements PotionData, PassiveEnchant {
 
-    public static final String ID = "nightvision";
+    public static final String ID = "speedyboi";
 
     private PotionSettingsImpl potionSettings;
     private PeriodSettingsImpl periodSettings;
 
-    public NightVisionEnchant(@NotNull EnchantsPlugin plugin, @NotNull File file) {
+    public SpeedyboiEnchant(@NotNull EnchantsPlugin plugin, @NotNull File file) {
         super(plugin, file);
         this.setDescription("Grants permanent " + ENCHANTMENT_POTION_TYPE + " " + ENCHANTMENT_POTION_LEVEL + " effect.");
-        this.setMaxLevel(1);
-        this.setRarity(Rarity.UNCOMMON);
+        this.setMaxLevel(2);
+        this.setRarity(Rarity.RARE);
     }
 
     @Override
     protected void loadAdditional(@NotNull FileConfig config) {
-        this.potionSettings = PotionSettingsImpl.create(this, config, PotionEffectType.NIGHT_VISION, true);
+        this.potionSettings = PotionSettingsImpl.create(this, config, PotionEffectType.SPEED, true);
         this.periodSettings = PeriodSettingsImpl.create(config);
     }
 
@@ -55,7 +55,7 @@ public class NightVisionEnchant extends AbstractEnchantmentData implements Potio
     @Override
     @NotNull
     public EnchantmentTarget getCategory() {
-        return EnchantmentTarget.ARMOR_HEAD;
+        return EnchantmentTarget.ARMOR_FEET;
     }
 
     @Override

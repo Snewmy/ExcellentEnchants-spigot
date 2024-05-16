@@ -53,5 +53,6 @@ public class Placeholders extends su.nightexpress.nightcore.util.Placeholders {
     public static final String ENCHANTMENT_CHARGES_CONSUME_AMOUNT        = "%enchantment_charges_consume_amount%";
     public static final String ENCHANTMENT_CHARGES_RECHARGE_AMOUNT       = "%enchantment_charges_recharge_amount%";
     public static final String ENCHANTMENT_CHARGES_FUEL_ITEM             = "%enchantment_charges_fuel_item%";
+    public static final String ENCHANTMENTS_ON_ITEM             = "%enchantments_on_item%";
 }
 

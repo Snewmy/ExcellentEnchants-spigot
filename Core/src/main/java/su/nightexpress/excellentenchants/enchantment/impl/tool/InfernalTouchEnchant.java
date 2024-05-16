@@ -1,14 +1,13 @@
 package su.nightexpress.excellentenchants.enchantment.impl.tool;
 
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.Particle;
-import org.bukkit.Sound;
+import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockState;
 import org.bukkit.block.Container;
+import org.bukkit.craftbukkit.v1_20_R3.block.CraftBlock;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.enchantments.EnchantmentTarget;
+import org.bukkit.entity.Item;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.block.BlockDropItemEvent;
@@ -36,57 +35,64 @@ import java.util.*;
 
 import static su.nightexpress.excellentenchants.Placeholders.*;
 
-public class SmelterEnchant extends AbstractEnchantmentData implements ChanceData, BlockDropEnchant {
+public class InfernalTouchEnchant extends AbstractEnchantmentData implements ChanceData, BlockDropEnchant {
 
-    public static final String ID = "smelter";
+    public static final String ID = "infernal_touch";
 
-    private UniSound           sound;
-    private boolean            disableOnCrouch;
+    private UniSound sound;
+    private boolean disableOnCrouch;
     private ChanceSettingsImpl chanceSettings;
 
     private final Set<Material> exemptedBlocks;
     private final Set<FurnaceRecipe> recipes;
 
-    public SmelterEnchant(@NotNull EnchantsPlugin plugin, @NotNull File file) {
+    public InfernalTouchEnchant(@NotNull EnchantsPlugin plugin, @NotNull File file) {
         super(plugin, file);
-        this.setDescription("Smelts mined blocks with " + ENCHANTMENT_CHANCE + "% chance.");
-        this.setMaxLevel(5);
-        this.setRarity(Rarity.UNCOMMON);
+        this.setDescription("Smelts mined blocks.");
+        this.setMaxLevel(1);
+        this.setRarity(Rarity.RARE);
         this.setConflicts(
-            SilkSpawnerEnchant.ID,
-            Enchantment.SILK_TOUCH.getKey().getKey()
+                SilkSpawnerEnchant.ID,
+                Enchantment.SILK_TOUCH.getKey().getKey()
         );
 
         this.exemptedBlocks = new HashSet<>();
         this.recipes = new HashSet<>();
     }
 
+    public boolean isRawOre(ItemStack itemStack) {
+        return switch (itemStack.getType()) {
+            case RAW_COPPER, RAW_GOLD, RAW_IRON -> true;
+            default -> false;
+        };
+    }
+
     @Override
     protected void loadAdditional(@NotNull FileConfig config) {
         this.plugin.getServer().recipeIterator().forEachRemaining(recipe -> {
-            if (recipe instanceof FurnaceRecipe furnaceRecipe && furnaceRecipe.getInput().getType().isBlock()) {
+            if (recipe instanceof FurnaceRecipe furnaceRecipe && (furnaceRecipe.getInput().getType().isBlock() || isRawOre(furnaceRecipe.getInput()))) {
                 this.recipes.add(furnaceRecipe);
             }
         });
 
-        this.chanceSettings = ChanceSettingsImpl.create(config, Modifier.add(10, 8, 1, 100));
+        this.chanceSettings = ChanceSettingsImpl.create(config, Modifier.add(100, 0, 0, 100));
 
         this.disableOnCrouch = ConfigValue.create("Settings.Disable_On_Crouch",
-            true,
-            "Sets whether or not enchantment will have no effect when crouching."
+                true,
+                "Sets whether or not enchantment will have no effect when crouching."
         ).read(config);
 
         this.sound = ConfigValue.create("Settings.Sound",
-            UniSound.of(Sound.BLOCK_LAVA_EXTINGUISH),
-            "Sound to play on smelting.",
-            "https://hub.spigotmc.org/javadocs/bukkit/org/bukkit/Sound.html"
+                UniSound.of(Sound.BLOCK_LAVA_EXTINGUISH),
+                "Sound to play on smelting.",
+                "https://hub.spigotmc.org/javadocs/bukkit/org/bukkit/Sound.html"
         ).read(config);
 
         this.exemptedBlocks.addAll(ConfigValue.forSet("Settings.Exempted_Blocks",
-            BukkitThing::getMaterial,
-            (cfg, path, set) -> cfg.set(path, set.stream().map(material -> material.getKey().getKey()).toList()),
-            Set.of(Material.STONE),
-            "List of blocks that are immune to smelter effect."
+                BukkitThing::getMaterial,
+                (cfg, path, set) -> cfg.set(path, set.stream().map(material -> material.getKey().getKey()).toList()),
+                Set.of(Material.STONE),
+                "List of blocks that are immune to smelter effect."
         ).read(config));
     }
 
@@ -116,13 +122,18 @@ public class SmelterEnchant extends AbstractEnchantmentData implements ChanceDat
         if (state instanceof Container || this.exemptedBlocks.contains(state.getType())) return false;
 
         if (!this.checkTriggerChance(level)) return false;
-
         List<ItemStack> smelts = new ArrayList<>();
         event.getItems().removeIf(drop -> {
-            FurnaceRecipe recipe = this.recipes.stream().filter(rec -> rec.getInputChoice().test(drop.getItemStack())).findFirst().orElse(null);
+            FurnaceRecipe recipe = this.recipes.stream()
+                    .filter(rec -> rec.getInputChoice().test(drop.getItemStack()))
+                    .findFirst()
+                    .orElse(null);
             if (recipe == null) return false;
 
-            smelts.add(recipe.getResult());
+            int itemAmount = drop.getItemStack().getAmount();
+            for (int i = 0 ; i < itemAmount ; i++) {
+                smelts.add(recipe.getResult());
+            }
             return true;
         });
         if (smelts.isEmpty()) return false;

@@ -36,7 +36,7 @@ public class EnderBowEnchant extends AbstractEnchantmentData implements ChanceDa
 
         this.setConflicts(
             BomberEnchant.ID, GhastEnchant.ID,
-            ExplosiveArrowsEnchant.ID, PoisonedArrowsEnchant.ID, ConfusingArrowsEnchant.ID,
+            ExplosiveEnchant.ID, PoisonedArrowsEnchant.ID, ConfusingArrowsEnchant.ID,
             WitheredArrowsEnchant.ID, ElectrifiedArrowsEnchant.ID, DragonfireArrowsEnchant.ID,
             DarknessArrowsEnchant.ID, VampiricArrowsEnchant.ID,
             HoverEnchant.ID, FlareEnchant.ID,

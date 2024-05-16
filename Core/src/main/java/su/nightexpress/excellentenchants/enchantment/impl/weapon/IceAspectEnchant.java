@@ -31,7 +31,7 @@ import static su.nightexpress.excellentenchants.Placeholders.*;
 
 public class IceAspectEnchant extends AbstractEnchantmentData implements ChanceData, PotionData, CombatEnchant {
 
-    public static final String ID = "ice_aspect";
+    public static final String ID = "iceaspect";
 
     private ChanceSettingsImpl chanceSettings;
     private PotionSettingsImpl potionSettings;

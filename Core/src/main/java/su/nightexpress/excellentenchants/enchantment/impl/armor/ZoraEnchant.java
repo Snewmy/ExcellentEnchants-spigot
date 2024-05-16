@@ -20,23 +20,23 @@ import java.io.File;
 
 import static su.nightexpress.excellentenchants.Placeholders.*;
 
-public class SpeedyEnchant extends AbstractEnchantmentData implements PotionData, PassiveEnchant {
+public class ZoraEnchant extends AbstractEnchantmentData implements PotionData, PassiveEnchant {
 
-    public static final String ID = "sonic";
+    public static final String ID = "zora";
 
     private PotionSettingsImpl potionSettings;
     private PeriodSettingsImpl periodSettings;
 
-    public SpeedyEnchant(@NotNull EnchantsPlugin plugin, @NotNull File file) {
+    public ZoraEnchant(@NotNull EnchantsPlugin plugin, @NotNull File file) {
         super(plugin, file);
-        this.setDescription("Grants permanent " + ENCHANTMENT_POTION_TYPE + " " + ENCHANTMENT_POTION_LEVEL + " effect.");
-        this.setMaxLevel(3);
+        this.setDescription("Grants permanent " + ENCHANTMENT_POTION_TYPE + " effect.");
+        this.setMaxLevel(1);
         this.setRarity(Rarity.UNCOMMON);
     }
 
     @Override
     protected void loadAdditional(@NotNull FileConfig config) {
-        this.potionSettings = PotionSettingsImpl.create(this, config, PotionEffectType.SPEED, true);
+        this.potionSettings = PotionSettingsImpl.create(this, config, PotionEffectType.WATER_BREATHING, true);
         this.periodSettings = PeriodSettingsImpl.create(config);
     }
 

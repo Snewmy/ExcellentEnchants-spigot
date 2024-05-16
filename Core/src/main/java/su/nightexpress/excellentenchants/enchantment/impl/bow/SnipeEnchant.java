@@ -1,15 +1,15 @@
 package su.nightexpress.excellentenchants.enchantment.impl.bow;
 
-import org.bukkit.enchantments.Enchantment;
 import org.bukkit.enchantments.EnchantmentTarget;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Projectile;
-import org.bukkit.entity.TNTPrimed;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityShootBowEvent;
 import org.bukkit.event.entity.ProjectileHitEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.util.Vector;
 import org.jetbrains.annotations.NotNull;
 import su.nightexpress.excellentenchants.EnchantsPlugin;
 import su.nightexpress.excellentenchants.api.Modifier;
@@ -26,53 +26,44 @@ import java.io.File;
 
 import static su.nightexpress.excellentenchants.Placeholders.*;
 
-public class BomberEnchant extends AbstractEnchantmentData implements ChanceData, BowEnchant {
+public class SnipeEnchant extends AbstractEnchantmentData implements BowEnchant, ChanceData {
 
-    public static final String ID = "bomber";
+    public static final String ID = "snipe";
 
-    private Modifier           fuseTicks;
     private ChanceSettingsImpl chanceSettings;
+    private Modifier           speedModifier;
 
-    public BomberEnchant(@NotNull EnchantsPlugin plugin, @NotNull File file) {
+    public SnipeEnchant(@NotNull EnchantsPlugin plugin, @NotNull File file) {
         super(plugin, file);
-        this.setDescription(ENCHANTMENT_CHANCE + "% chance to launch TNT that explodes in " + GENERIC_TIME + "s.");
-        this.setMaxLevel(3);
-        this.setRarity(Rarity.RARE);
-        this.setConflicts(
-            EnderBowEnchant.ID, GhastEnchant.ID,
-            ExplosiveEnchant.ID, PoisonedArrowsEnchant.ID, ConfusingArrowsEnchant.ID,
-            WitheredArrowsEnchant.ID, ElectrifiedArrowsEnchant.ID, DragonfireArrowsEnchant.ID,
-            DarknessArrowsEnchant.ID,
-            HoverEnchant.ID, FlareEnchant.ID,
-            Enchantment.ARROW_FIRE.getKey().getKey(),
-            Enchantment.ARROW_KNOCKBACK.getKey().getKey(),
-            Enchantment.ARROW_DAMAGE.getKey().getKey()
-        );
+
+        this.setDescription("Increases projectile speed by " + GENERIC_AMOUNT + "%");
+        this.setMaxLevel(4);
+        this.setRarity(Rarity.UNCOMMON);
     }
 
     @Override
     protected void loadAdditional(@NotNull FileConfig config) {
-        this.chanceSettings = ChanceSettingsImpl.create(config, Modifier.add(3.5, 1.5, 1, 100));
+        this.chanceSettings = ChanceSettingsImpl.create(config);
 
-        this.fuseTicks = Modifier.read(config, "Settings.Fuse_Ticks",
-            Modifier.add(110, -10, 1),
-            "Sets fuse ticks (before it will explode) for the launched TNT.");
+        this.speedModifier = Modifier.read(config, "Settings.Speed_Modifier",
+            Modifier.add(1, 0.2, 1, 3D),
+            "Sets projectile's speed modifier.");
 
-        this.addPlaceholder(GENERIC_TIME, level -> NumberUtil.format((double) this.getFuseTicks(level) / 20D));
+        this.addPlaceholder(GENERIC_AMOUNT, level -> NumberUtil.format(this.getSpeedModifier(level) * 100D));
     }
 
     @NotNull
     @Override
     public ChanceSettings getChanceSettings() {
-        return chanceSettings;
+        return this.chanceSettings;
     }
 
-    public int getFuseTicks(int level) {
-        return (int) this.fuseTicks.getValue(level);
+    public double getSpeedModifier(int level) {
+        return this.speedModifier.getValue(level);
     }
 
-    @Override
     @NotNull
+    @Override
     public EnchantmentTarget getCategory() {
         return EnchantmentTarget.BOW;
     }
@@ -86,15 +77,13 @@ public class BomberEnchant extends AbstractEnchantmentData implements ChanceData
     @Override
     public boolean onShoot(@NotNull EntityShootBowEvent event, @NotNull LivingEntity shooter, @NotNull ItemStack bow, int level) {
         if (!this.checkTriggerChance(level)) return false;
-        if (!(event.getProjectile() instanceof Projectile projectile)) return false;
 
-        int fuseTicks = Math.max(1, this.getFuseTicks(level));
+        double modifier = this.getSpeedModifier(level);
 
-        TNTPrimed primed = projectile.getWorld().spawn(projectile.getLocation(), TNTPrimed.class);
-        primed.setVelocity(projectile.getVelocity().multiply(event.getForce() * 1.25));
-        primed.setFuseTicks(fuseTicks);
-        primed.setSource(shooter);
-        event.setProjectile(primed);
+        Entity entity = event.getProjectile();
+        Vector vector = entity.getVelocity();
+        entity.setVelocity(vector.multiply(modifier));
+
         return true;
     }
 

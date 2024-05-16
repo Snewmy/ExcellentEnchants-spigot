@@ -18,10 +18,11 @@ import su.nightexpress.excellentenchants.config.Config;
 import su.nightexpress.excellentenchants.enchantment.impl.armor.*;
 import su.nightexpress.excellentenchants.enchantment.impl.bow.*;
 import su.nightexpress.excellentenchants.enchantment.impl.fishing.*;
+import su.nightexpress.excellentenchants.enchantment.impl.outdated.DexterityEnchant;
+import su.nightexpress.excellentenchants.enchantment.impl.outdated.GetawayEnchant;
 import su.nightexpress.excellentenchants.enchantment.impl.tool.*;
-import su.nightexpress.excellentenchants.enchantment.impl.universal.CurseOfFragilityEnchant;
-import su.nightexpress.excellentenchants.enchantment.impl.universal.RestoreEnchant;
-import su.nightexpress.excellentenchants.enchantment.impl.universal.SoulboundEnchant;
+import su.nightexpress.excellentenchants.enchantment.impl.universal.*;
+import su.nightexpress.excellentenchants.enchantment.impl.universal.AuraEnchant;
 import su.nightexpress.excellentenchants.enchantment.impl.weapon.*;
 import su.nightexpress.excellentenchants.enchantment.registry.wrapper.DataGather;
 import su.nightexpress.excellentenchants.enchantment.registry.wrapper.DataGathers;
@@ -89,13 +90,16 @@ public class EnchantRegistry extends SimpleManager<EnchantsPlugin> {
         this.register(SilkSpawnerEnchant.ID, file -> new SilkSpawnerEnchant(plugin, file));
         this.register(HasteEnchant.ID, file -> new HasteEnchant(plugin, file));
         this.register(LuckyMinerEnchant.ID, file -> new LuckyMinerEnchant(plugin, file));
-        this.register(ReplanterEnchant.ID, file -> new ReplanterEnchant(plugin, file));
+        this.register(ReplenishEnchant.ID, file -> new ReplenishEnchant(plugin, file));
         this.register(SilkChestEnchant.ID, file -> new SilkChestEnchant(plugin, file));
-        this.register(SmelterEnchant.ID, file -> new SmelterEnchant(plugin, file));
+        this.register(InfernalTouchEnchant.ID, file -> new InfernalTouchEnchant(plugin, file));
         this.register(TelekinesisEnchant.ID, file -> new TelekinesisEnchant(plugin, file));
         this.register(TreasureHunterEnchant.ID, file -> new TreasureHunterEnchant(plugin, file));
-        this.register(TunnelEnchant.ID, file -> new TunnelEnchant(plugin, file));
+        this.register(GigaminerEnchant.ID, file -> new GigaminerEnchant(plugin, file));
         this.register(VeinminerEnchant.ID, file -> new VeinminerEnchant(plugin, file));
+        this.register(GlassGeneratorEnchant.ID, file -> new GlassGeneratorEnchant(plugin, file));
+        this.register(SnowEnchant.ID, file -> new SnowEnchant(plugin, file));
+        this.register(TreeCapitatorEnchant.ID, file -> new TreeCapitatorEnchant(plugin, file));
 
         // Weapon enchants
         this.register(BaneOfNetherspawnEnchant.ID, file -> new BaneOfNetherspawnEnchant(plugin, file));
@@ -106,7 +110,7 @@ public class EnchantRegistry extends SimpleManager<EnchantsPlugin> {
         this.register(DecapitatorEnchant.ID, file -> new DecapitatorEnchant(plugin, file));
         this.register(DoubleStrikeEnchant.ID, file -> new DoubleStrikeEnchant(plugin, file));
         this.register(ExhaustEnchant.ID, file -> new ExhaustEnchant(plugin, file));
-        this.register(WisdomEnchant.ID, file -> new WisdomEnchant(plugin, file));
+        //this.register(WisdomEnchant.ID, file -> new WisdomEnchant(plugin, file));
         this.register(IceAspectEnchant.ID, file -> new IceAspectEnchant(plugin, file));
         this.register(InfernusEnchant.ID, file -> new InfernusEnchant(plugin, file));
         this.register(NimbleEnchant.ID, file -> new NimbleEnchant(plugin, file));
@@ -124,6 +128,7 @@ public class EnchantRegistry extends SimpleManager<EnchantsPlugin> {
         this.register(VenomEnchant.ID, file -> new VenomEnchant(plugin, file));
         this.register(VillageDefenderEnchant.ID, file -> new VillageDefenderEnchant(plugin, file));
         this.register(WitherEnchant.ID, file -> new WitherEnchant(plugin, file));
+        this.register(ShulkerHarvestEnchant.ID, file -> new ShulkerHarvestEnchant(plugin, file));
 
         // Armor enchants
         this.register(WaterBreathingEnchant.ID, file -> new WaterBreathingEnchant(plugin, file));
@@ -139,7 +144,8 @@ public class EnchantRegistry extends SimpleManager<EnchantsPlugin> {
         this.register(SaturationEnchant.ID, file -> new SaturationEnchant(plugin, file));
         this.register(KamikadzeEnchant.ID, file -> new KamikadzeEnchant(plugin, file));
         this.register(StoppingForceEnchant.ID, file -> new StoppingForceEnchant(plugin, file));
-        this.register(SpeedyEnchant.ID, file -> new SpeedyEnchant(plugin, file));
+        this.register(SpeedyboiEnchant.ID, file -> new SpeedyboiEnchant(plugin, file));
+        this.register(ZoraEnchant.ID, file -> new ZoraEnchant(plugin, file));
 
         // Bow enchants
         this.register(BomberEnchant.ID, file -> new BomberEnchant(plugin, file));
@@ -147,22 +153,30 @@ public class EnchantRegistry extends SimpleManager<EnchantsPlugin> {
         this.register(DragonfireArrowsEnchant.ID, file -> new DragonfireArrowsEnchant(plugin, file));
         this.register(ElectrifiedArrowsEnchant.ID, file -> new ElectrifiedArrowsEnchant(plugin, file));
         this.register(EnderBowEnchant.ID, file -> new EnderBowEnchant(plugin, file));
-        this.register(ExplosiveArrowsEnchant.ID, file -> new ExplosiveArrowsEnchant(plugin, file));
+        this.register(ExplosiveEnchant.ID, file -> new ExplosiveEnchant(plugin, file));
         this.register(FlareEnchant.ID, file -> new FlareEnchant(plugin, file));
         this.register(GhastEnchant.ID, file -> new GhastEnchant(plugin, file));
         this.register(HoverEnchant.ID, file -> new HoverEnchant(plugin, file));
-        this.register(SniperEnchant.ID, file -> new SniperEnchant(plugin, file));
+        this.register(SnipeEnchant.ID, file -> new SnipeEnchant(plugin, file));
         this.register(PoisonedArrowsEnchant.ID, file -> new PoisonedArrowsEnchant(plugin, file));
         this.register(VampiricArrowsEnchant.ID, file -> new VampiricArrowsEnchant(plugin, file));
         this.register(WitheredArrowsEnchant.ID, file -> new WitheredArrowsEnchant(plugin, file));
         this.register(DarknessArrowsEnchant.ID, file -> new DarknessArrowsEnchant(plugin, file));
         this.register(DarknessCloakEnchant.ID, file -> new DarknessCloakEnchant(plugin, file));
+        this.register(BossHunterEnchant.ID, file -> new BossHunterEnchant(plugin, file));
 
         // Universal
         this.register(CurseOfFragilityEnchant.ID, file -> new CurseOfFragilityEnchant(plugin, file));
         this.register(CurseOfMediocrityEnchant.ID, file -> new CurseOfMediocrityEnchant(plugin, file));
         this.register(SoulboundEnchant.ID, file -> new SoulboundEnchant(plugin, file));
         this.register(RestoreEnchant.ID, file -> new RestoreEnchant(plugin, file));
+        this.register(WisdomEnchant.ID, file -> new WisdomEnchant(plugin, file));
+        this.register(JingleEnchant.ID, file -> new JingleEnchant(plugin, file));
+
+        //Outdated
+        this.register(GetawayEnchant.ID, file -> new GetawayEnchant(plugin, file));
+        this.register(AuraEnchant.ID, file -> new AuraEnchant(plugin, file));
+        this.register(DexterityEnchant.ID, file -> new DexterityEnchant(plugin, file));
 
         this.plugin.getEnchantNMS().freezeRegistry();
         this.plugin.info("Enchantments Registered: " + EnchantRegistry.getRegistered().size());

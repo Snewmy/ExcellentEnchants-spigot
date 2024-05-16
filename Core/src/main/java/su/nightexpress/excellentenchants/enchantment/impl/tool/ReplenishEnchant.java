@@ -32,9 +32,9 @@ import su.nightexpress.nightcore.util.wrapper.UniSound;
 import java.io.File;
 import java.util.Set;
 
-public class ReplanterEnchant extends AbstractEnchantmentData implements ChanceData, InteractEnchant, BlockBreakEnchant {
+public class ReplenishEnchant extends AbstractEnchantmentData implements ChanceData, InteractEnchant, BlockBreakEnchant {
 
-    public static final String ID = "replanter";
+    public static final String ID = "replenish";
 
     private boolean replantOnRightClick;
     private boolean replantOnPlantBreak;
@@ -46,9 +46,9 @@ public class ReplanterEnchant extends AbstractEnchantmentData implements ChanceD
         Material.MELON_SEEDS, Material.PUMPKIN_SEEDS,
         Material.POTATO, Material.CARROT, Material.NETHER_WART);
 
-    public ReplanterEnchant(@NotNull EnchantsPlugin plugin, @NotNull File file) {
+    public ReplenishEnchant(@NotNull EnchantsPlugin plugin, @NotNull File file) {
         super(plugin, file);
-        this.setDescription("Automatically replant crops on right click and when harvest.");
+        this.setDescription("Automatically replant crops on right click and harvesting.");
         this.setMaxLevel(1);
         this.setRarity(Rarity.RARE);
     }

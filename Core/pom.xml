@@ -38,6 +38,10 @@
             <id>lumine-snapshot</id>
             <url>http://mvn.lumine.io/repository/maven-snapshots/</url>
         </repository>
+        <repository>
+            <id>neetgames</id>
+            <url>https://nexus.neetgames.com/repository/maven-releases/</url>
+        </repository>
     </repositories>
 
     <dependencies>
@@ -93,6 +97,11 @@
             <groupId>su.nightexpress.excellentenchants</groupId>
             <artifactId>V1_19_R3</artifactId>
             <version>4.0.4</version>
+        </dependency>
+        <dependency>
+            <groupId>com.gmail.nossr50.mcMMO</groupId>
+            <artifactId>mcMMO</artifactId>
+            <version>2.2.004</version>
         </dependency>
     </dependencies>
 

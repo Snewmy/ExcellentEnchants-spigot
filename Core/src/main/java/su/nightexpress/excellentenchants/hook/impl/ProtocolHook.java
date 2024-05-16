@@ -101,7 +101,7 @@ public class ProtocolHook {
         }
         if (EnchantUtils.canHaveDescription(item) && !isCreative) {
             enchants.forEach((enchant, level) -> {
-                lore.addAll(0, enchant.getDescriptionReplaced(level));
+                lore.addAll(0, NightMessage.asLegacy(enchant.getDescriptionReplaced(level)));
             });
         }
         enchants.forEach((enchant, level) -> {

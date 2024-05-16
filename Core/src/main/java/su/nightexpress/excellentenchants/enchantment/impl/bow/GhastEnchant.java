@@ -42,7 +42,7 @@ public class GhastEnchant extends AbstractEnchantmentData implements ChanceData,
 
         this.setConflicts(
             EnderBowEnchant.ID, BomberEnchant.ID,
-            ExplosiveArrowsEnchant.ID, PoisonedArrowsEnchant.ID, ConfusingArrowsEnchant.ID,
+            ExplosiveEnchant.ID, PoisonedArrowsEnchant.ID, ConfusingArrowsEnchant.ID,
             WitheredArrowsEnchant.ID, ElectrifiedArrowsEnchant.ID, DragonfireArrowsEnchant.ID,
             DarknessArrowsEnchant.ID, VampiricArrowsEnchant.ID,
             HoverEnchant.ID, FlareEnchant.ID,
